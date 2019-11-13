@@ -1,0 +1,1411 @@
+\documentclass[a4paper, 10pt]{scrartcl}
+
+%\usepackage{mathptmx} % more compact font
+\usepackage[utf8]{inputenc}
+
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{paralist} % for compacter lists
+\usepackage{hyperref} % for Todo's and similar things
+\usepackage[left=4.5mm, right=4.5mm, top=4.5mm, bottom=6mm, landscape, nohead, nofoot]{geometry}
+\usepackage[small,compact]{titlesec}
+\usepackage[extreme]{savetrees}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{xparse}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{dsfont}
+
+\usepackage{caption}
+
+\usepackage{resizegather} 	% resizing equations
+
+% ALGORITHMS
+\usepackage[ruled,vlined]{algorithm2e}
+\SetKwProg{Fn}{Function}{}{}
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\SetKwInput{KwIn}{In}
+\SetKwInput{KwOut}{Out}
+\SetKw{KwBreak}{break}
+
+% PROOFS
+\newcommand{\qed}{\hfill$\square$}
+\newcommand{\contradiction}{\hfill$\lightning$}
+
+% MATH HIGHLIGHTING
+\newcommand{\mhl}[2]{\colorbox{#1}{$\displaystyle#2$}}
+\newcommand{\mhlr}[1]{\mathhl{red}{#1}}
+\newcommand{\mhlg}[1]{\mathhl{green}{#1}}
+\newcommand{\mhlb}[1]{\mathhl{blue}{#1}}
+\newcommand{\mhly}[1]{\mathhl{yellow}{#1}}
+
+% CODE IN MATH
+\newcommand{\mcode}[1]{\texttt{#1}}
+
+% COLOR IN MATH (without the bad behaviour of textcolor)
+\makeatletter
+\def\mc#1#{\@mc{#1}}
+\def\@mc#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+
+% ASYMPTOTIC NOTATIONS
+\newcommand{\BigO}{\mathcal{O}}
+
+% NUMBER SYSTEMS
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\bbH}{\mathbb{H}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\M}{\mathbb{M}}
+\newcommand{\C}{\mathbb{C}}
+
+% CALLICGRAPHIC SHORTCUTS
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+% BRACES
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\dset}[2]{\left\{ #1 \ \middle| \ #2 \right\}}
+\newcommand{\alg}[1]{\left\langle #1 \right\rangle}
+\newcommand{\card}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\length}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\scprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\linsys}[2]{\left[\ #1 \ \middle| \ #2 \ \right]}
+\newcommand{\Sim}[1]{\text{Sim}\left( #1 \right)}
+
+% BRACES SMALL (no adjusting)
+\newcommand{\sset}[1]{\{ #1 \}}
+\newcommand{\sdset}[2]{\{ #1 \ | \ #2 \}}
+\newcommand{\salg}[1]{\langle #1 \rangle}
+\newcommand{\scard}[1]{\lvert #1 \rvert}
+\newcommand{\slength}[1]{\lvert #1 \rvert}
+\newcommand{\sabs}[1]{\lvert #1 \rvert}
+\newcommand{\snorm}[1]{\lVert #1 \rVert}
+\newcommand{\sscprod}[1]{\langle #1 \rangle}
+\newcommand{\sceil}[1]{\lceil #1 \rceil}
+\newcommand{\sfloor}[1]{\lfloor #1 \rfloor}
+\newcommand{\slinsys}[2]{[\ #1 \ | \ #2 \ ]}
+\newcommand{\sSim}[1]{\text{Sim}( #1 )}
+
+% EMPTY SET
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+% NOT IN SHORTCUT
+\newcommand{\nin}{\not\in}
+
+% DISJOINT UNION SYMBOL
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+\newcommand{\bigcupdot}{\charfusion[\mathop]{\bigcup}{\cdot}}
+\newcommand{\cupdot}{\mathbin{\mathaccent\cdot\cup}}
+
+% CUSTOM STATISTICS
+\newcommand{\Prob}[2][]{P_{#1}\left( #2 \right)}
+\newcommand{\cProb}[2]{P\left( #1 \,\middle|\, #2 \right)}
+\newcommand{\Dist}[2]{#1\left( #2 \right)}
+\newcommand{\cDist}[3]{#1\left( #2 \,\middle|\, #3 \right)}
+\newcommand{\hProb}[2][]{\hat{P}_{#1}\left( #2 \right)}
+\newcommand{\chProb}[2]{\hat{P}\left( #1 \,\middle|\, #2 \right)}
+\newcommand{\Var}[2][]{\operatorname{Var}_{#1}\left[ #2 \right]}
+\newcommand{\sd}[1]{\operatorname{sd}\left( #1 \right)}
+\newcommand{\Exp}[2][]{{\mathbb{E}_{#1}}\left[ #2
+\right]}
+\newcommand{\cExp}[3][]{{\mathbb{E}}_{#1}\left[ #2
+\,\middle|\, #3 \right]}
+\newcommand{\hExp}[2][]{{\mathbb{\hat{E}}_{#1}}\left[ #2
+\right]}
+\newcommand{\chExp}[3][]{{\mathbb{\hat{E}}}_{#1}\left[ #2
+\,\middle|\, #3 \right]}
+\newcommand{\Corr}[1]{\operatorname{Corr}\left[ #1 \right]}
+\newcommand{\Cov}[1]{\operatorname{Cov}\left(#1 \right)}
+\newcommand{\MSE}[2][]{\operatorname{MSE}_{#1}\left[ #2 \right]}
+\newcommand{\riid}{\stackrel{\text{\tiny i.i.d.}}{\sim}}
+\newcommand{\approxsim}{\stackrel{\text{approx.}}{\sim}}
+\newcommand{\ind}[1]{\mathds{1}_{\set{#1}}}
+\newcommand{\eqiid}{\stackrel{\text{\tiny i.i.d.}}{=}}
+\newcommand{\eqind}{\stackrel{\text{\tiny ind.}}{=}}
+
+% BAYESIAN NETWORKS
+\newcommand{\indep}{\perp}
+\newcommand{\given}{\,\,|\,\,}
+\newcommand{\Pa}{\mathbf{Pa}}
+\newcommand{\dsep}[2]{\operatorname{d-sep}\left( #1 \,\middle|\, #2 \right)}
+
+% RANDOM VARIABLES
+\newcommand{\rA}{A}
+\newcommand{\rB}{B}
+\newcommand{\rC}{C}
+\newcommand{\rD}{D}
+\newcommand{\rE}{E}
+\newcommand{\rF}{F}
+\newcommand{\rG}{G}
+\newcommand{\rH}{H}
+\newcommand{\rI}{I}
+\newcommand{\rJ}{J}
+\newcommand{\rK}{K}
+\newcommand{\rL}{L}
+\newcommand{\rM}{M}
+\newcommand{\rN}{N}
+\newcommand{\rO}{O}
+\newcommand{\rP}{P}
+\newcommand{\rQ}{Q}
+\newcommand{\rR}{R}
+\newcommand{\rS}{S}
+\newcommand{\rT}{T}
+\newcommand{\rU}{U}
+\newcommand{\rV}{V}
+\newcommand{\rW}{W}
+\newcommand{\rX}{X}
+\newcommand{\rY}{Y}
+\newcommand{\rZ}{Z}
+
+% RANDOM VECTORS
+% declares a custom italic bold alphabet for random vectors
+\DeclareMathAlphabet{\mathbfit}{OML}{cmm}{b}{it}
+\newcommand{\rvA}{\mathbfit{A}}
+\newcommand{\rvB}{\mathbfit{B}}
+\newcommand{\rvC}{\mathbfit{C}}
+\newcommand{\rvD}{\mathbfit{D}}
+\newcommand{\rvE}{\mathbfit{E}}
+\newcommand{\rvF}{\mathbfit{F}}
+\newcommand{\rvG}{\mathbfit{G}}
+\newcommand{\rvH}{\mathbfit{H}}
+\newcommand{\rvI}{\mathbfit{I}}
+\newcommand{\rvJ}{\mathbfit{J}}
+\newcommand{\rvK}{\mathbfit{K}}
+\newcommand{\rvL}{\mathbfit{L}}
+\newcommand{\rvM}{\mathbfit{M}}
+\newcommand{\rvN}{\mathbfit{N}}
+\newcommand{\rvO}{\mathbfit{O}}
+\newcommand{\rvP}{\mathbfit{P}}
+\newcommand{\rvQ}{\mathbfit{Q}}
+\newcommand{\rvR}{\mathbfit{R}}
+\newcommand{\rvS}{\mathbfit{S}}
+\newcommand{\rvT}{\mathbfit{T}}
+\newcommand{\rvU}{\mathbfit{U}}
+\newcommand{\rvV}{\mathbfit{V}}
+\newcommand{\rvW}{\mathbfit{W}}
+\newcommand{\rvX}{\mathbfit{X}}
+\newcommand{\rvY}{\mathbfit{Y}}
+\newcommand{\rvZ}{\mathbfit{Z}}
+
+% MACHINE LEARNING
+\newcommand{\Risk}[1]{R\left(#1\right)}
+\newcommand{\empRisk}[1]{\widehat{R}\left(#1\right)}
+
+% ACCENTS
+% TODO: fix this, make spacing nice
+\newcommand*{\Hm}{\mathsf{H}}
+\newcommand*{\T}{\mathsf{T}}
+%\newcommand*{\T}{\mkern-1mu{}_{}^{\scriptscriptstyle\top}\mkern-4mu}
+\newcommand*{\Rev}{\mathsf{R}}
+\newcommand{\conj}[1]{\overline{ #1 }}
+
+% CUSTOM ALPHABETS
+\renewcommand{\S}{\Sigma}
+\newcommand{\Ss}{\Sigma^*}
+\newcommand{\Sp}{\Sigma^+}
+\newcommand{\Sbool}{\Sigma_{\text{bool}}}
+\newcommand{\Ssbool}{(\Sigma_{\text{bool}})^*}
+\newcommand{\Slogic}{\Sigma_{\text{logic}}}
+\newcommand{\Sslogic}{(\Sigma_{\text{logic}})^*}
+\newcommand{\Slat}{\Sigma_{\text{lat}}}
+\newcommand{\Sslat}{(\Sigma_{\text{lat}})^*}
+\newcommand{\Stastatur}{\Sigma_{\text{Tastatur}}}
+\newcommand{\Sstastatur}{(\Sigma_{\text{Tastatur}})^*}
+\newcommand{\Sm}{\Sigma_{m}}
+\newcommand{\Ssm}{\Sigma_{m}^*}
+\newcommand{\ZO}{\{0,1\}}
+\newcommand{\ZOs}{\{0,1\}^*}
+\newcommand{\hdelta}{\hat\delta}
+
+% OPERATORS
+% TODO: Should I design these as braces?
+\DeclareMathOperator{\id}{\text{id}}
+\DeclareMathOperator{\Kon}{\text{Kon}}
+\DeclareMathOperator{\cost}{\text{cost}}
+\DeclareMathOperator{\goal}{\text{goal}}
+\DeclareMathOperator{\Opt}{\text{Opt}}
+\DeclareMathOperator{\Bin}{\text{Bin}}
+\DeclareMathOperator{\Nummer}{\text{Nummer}}
+\DeclareMathOperator{\Prim}{\text{Prim}}
+\DeclareMathOperator{\Kl}{\text{Kl}}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\glb}{glb}
+\DeclareMathOperator{\lub}{lub}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\Cost}{Cost}
+\DeclareMathOperator{\order}{order}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\nnz}{nnz}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Count}{Count}
+\DeclareMathOperator{\Spur}{Spur}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\triu}{triu}
+\DeclareMathOperator{\cumsum}{cumsum}
+\DeclareMathOperator{\vectorize}{vectorize}
+\DeclareMathOperator{\matrixfy}{matrixfy}
+\DeclareMathOperator{\circul}{circul}
+\DeclareMathOperator{\dft}{dft}
+\DeclareMathOperator{\invdft}{invdft}
+\DeclareMathOperator{\ones}{ones}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arctanh}{arctanh}
+\renewcommand\div{\operatorname{div}}
+\DeclareMathOperator{\rot}{rot}
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\Hess}{Hess}
+\newcommand{\laplace}{\Delta}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\odd}{odd}
+\DeclareMathOperator{\even}{even}
+\DeclareMathOperator{\Proj}{Proj}
+
+% CRYPTOGRAPHY
+\DeclareMathOperator{\concat}{ || }
+\DeclareMathOperator{\Enc}{Enc}
+\DeclareMathOperator{\Dec}{Dec}
+\DeclareMathOperator{\Gen}{Gen}
+\DeclareMathOperator{\Tag}{Tag}
+\DeclareMathOperator{\Vrfy}{Vrfy}
+\DeclareMathOperator{\MAC}{\text{MAC}}
+\newcommand{\AdvPRG}[2][]{\text{Adv}_{\text{PRG}}\left[ #2 \right]}
+\newcommand{\yes}{\text{yes}}
+\newcommand{\no}{\text{no}}
+\newcommand{\forallPPTTM}{%
+\underset{\mathclap{\substack{\text{\tiny prob. poly-}\\
+\text{\tiny time TM}}}}{\forall}}
+\newcommand{\forallPTAdv}{%
+\underset{\mathclap{\substack{\text{\tiny poly-time}\\
+\text{\tiny Adversaries}}}}{\forall}}
+
+% OPERATORS (OVERRIDDEN)
+\renewcommand\Re{\operatorname{Re}}
+\renewcommand\Im{\operatorname{Im}}
+
+% RELATIONAL ALGEBRA 
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\sch}{sch}
+\newcommand{\dto}{\stackrel{\bullet}{\to}}
+\newcommand{\join}{\bowtie}
+\newcommand{\lojoin}{{\tiny \textifsym{d|><|}}}
+\newcommand{\rojoin}{{\tiny \textifsym{|><|d}}}
+\newcommand{\fojoin}{{\tiny \textifsym{d|><|d}}}
+\newcommand{\lsjoin}{\ltimes}
+\newcommand{\rsjoin}{\rtimes}
+
+% RELATIONS
+\newcommand{\mbeq}{\stackrel{!}{=}}
+\newcommand{\xor}{\mathrel{\text{xor}}}
+\newcommand{\relid}{\mathrel{\id}}
+\newcommand{\relrho}{\mathrel{\rho}}
+\newcommand{\relsigma}{\mathrel{\sigma}}
+\newcommand{\reltheta}{\mathrel{\theta}}
+\newcommand{\relsim}{\mathrel{\sim}}
+\newcommand{\relf}{\mathrel{f}}
+
+% RELATIONS (INVERSES)
+\newcommand{\invrelid}{\mathrel{\widehat{\id}}}
+\newcommand{\invrelrho}{\mathrel{\widehat{\rho}}}
+\newcommand{\invrelsigma}{\mathrel{\widehat{\sigma}}}
+\newcommand{\invreltheta}{\mathrel{\widehat{\theta}}}
+\newcommand{\invrelsim}{\mathrel{\widehat{\sim}}}
+\newcommand{\invrelf}{\mathrel{\widehat{f}}}
+
+% CUSTOM RELATIONS
+\DeclareRobustCommand{\step}[2][]{\mathrel{\drawstep{#1}{#2}}}
+\newcommand{\drawstep}[2]{%
+  \vcenter{\hbox{%
+    \setlength{\unitlength}{1em}%
+    \begin{picture}(1,1)
+    \roundcap
+    \put(0,0){\line(0,1){1}}
+    \put(0,0.5){\line(1,0){0.95}}
+    \put(0.5,0){\makebox[0pt]{\text{\smaller$\scriptscriptstyle#2$}}}
+    \put(0.5,0.6){\makebox[0pt]{\text{\smaller$#1$}}}
+    \end{picture}%
+  }}%
+}
+
+% LINEAR TEMPORAL LOGIC (LTL)
+\newcommand{\until}{\texttt{\,\hstretch{0.7}{\boldsymbol{\cup}}\,}}
+\newcommand{\next}{\Circle}
+\newcommand{\eventually}{\Diamond}
+\newcommand{\always}{\square}
+
+% GLOBAL MATRICES AND VECTOR SETTINGS
+\newcommand{\boldm}[1] {\mathversion{bold}#1\mathversion{normal}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+% VECTORS (LATIN)
+\newcommand{\va}{\vec{a}}
+\newcommand{\vb}{\vec{b}}
+\newcommand{\vc}{\vec{c}}
+\newcommand{\vd}{\vec{d}}
+\newcommand{\ve}{\vec{e}}
+\newcommand{\vf}{\vec{f}}
+\newcommand{\vg}{\vec{g}}
+\newcommand{\vh}{\vec{h}}
+\newcommand{\vi}{\vec{i}}
+\newcommand{\vj}{\vec{j}}
+\newcommand{\vk}{\vec{k}}
+\newcommand{\vl}{\vec{l}}
+\newcommand{\vm}{\vec{m}}
+\newcommand{\vn}{\vec{n}}
+\newcommand{\vo}{\vec{o}}
+\newcommand{\vp}{\vec{p}}
+\newcommand{\vq}{\vec{q}}
+\newcommand{\vr}{\vec{r}}
+\newcommand{\vs}{\vec{s}}
+\newcommand{\vt}{\vec{t}}
+\newcommand{\vu}{\vec{u}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
+\newcommand{\vz}{\vec{z}}
+
+% VECTORS (LATIN) WITH TILDE ACCENT
+\newcommand{\vta}{\widetilde{\vec{a}}}
+\newcommand{\vtb}{\widetilde{\vec{b}}}
+\newcommand{\vtc}{\widetilde{\vec{c}}}
+\newcommand{\vtd}{\widetilde{\vec{d}}}
+\newcommand{\vte}{\widetilde{\vec{e}}}
+\newcommand{\vtf}{\widetilde{\vec{f}}}
+\newcommand{\vtg}{\widetilde{\vec{g}}}
+\newcommand{\vth}{\widetilde{\vec{h}}}
+\newcommand{\vti}{\widetilde{\vec{i}}}
+\newcommand{\vtj}{\widetilde{\vec{j}}}
+\newcommand{\vtk}{\widetilde{\vec{k}}}
+\newcommand{\vtl}{\widetilde{\vec{l}}}
+\newcommand{\vtm}{\widetilde{\vec{m}}}
+\newcommand{\vtn}{\widetilde{\vec{n}}}
+\newcommand{\vto}{\widetilde{\vec{o}}}
+\newcommand{\vtp}{\widetilde{\vec{p}}}
+\newcommand{\vtq}{\widetilde{\vec{q}}}
+\newcommand{\vtr}{\widetilde{\vec{r}}}
+\newcommand{\vts}{\widetilde{\vec{s}}}
+\newcommand{\vtt}{\widetilde{\vec{t}}}
+\newcommand{\vtu}{\widetilde{\vec{u}}}
+\newcommand{\vtv}{\widetilde{\vec{v}}}
+\newcommand{\vtw}{\widetilde{\vec{w}}}
+\newcommand{\vtx}{\widetilde{\vec{x}}}
+\newcommand{\vty}{\widetilde{\vec{y}}}
+\newcommand{\vtz}{\widetilde{\vec{z}}}
+
+% VECTORS (LATIN) WITH HAT ACCENT
+\newcommand{\vha}{\widehat{\vec{a}}}
+\newcommand{\vhb}{\widehat{\vec{b}}}
+\newcommand{\vhc}{\widehat{\vec{c}}}
+\newcommand{\vhd}{\widehat{\vec{d}}}
+\newcommand{\vhe}{\widehat{\vec{e}}}
+\newcommand{\vhf}{\widehat{\vec{f}}}
+\newcommand{\vhg}{\widehat{\vec{g}}}
+\newcommand{\vhh}{\widehat{\vec{h}}}
+\newcommand{\vhi}{\widehat{\vec{i}}}
+\newcommand{\vhj}{\widehat{\vec{j}}}
+\newcommand{\vhk}{\widehat{\vec{k}}}
+\newcommand{\vhl}{\widehat{\vec{l}}}
+\newcommand{\vhm}{\widehat{\vec{m}}}
+\newcommand{\vhn}{\widehat{\vec{n}}}
+\newcommand{\vho}{\widehat{\vec{o}}}
+\newcommand{\vhp}{\widehat{\vec{p}}}
+\newcommand{\vhq}{\widehat{\vec{q}}}
+\newcommand{\vhr}{\widehat{\vec{r}}}
+\newcommand{\vhs}{\widehat{\vec{s}}}
+\newcommand{\vht}{\widehat{\vec{t}}}
+\newcommand{\vhu}{\widehat{\vec{u}}}
+\newcommand{\vhv}{\widehat{\vec{v}}}
+\newcommand{\vhw}{\widehat{\vec{w}}}
+\newcommand{\vhx}{\widehat{\vec{x}}}
+\newcommand{\vhy}{\widehat{\vec{y}}}
+\newcommand{\vhz}{\widehat{\vec{z}}}
+
+% VECTORS (GREEK)
+\newcommand{\valpha}{\boldsymbol{\alpha}}
+\newcommand{\vbeta}{\boldsymbol{\beta}}
+\newcommand{\vgamma}{\boldsymbol{\gamma}}
+\newcommand{\vdelta}{\boldsymbol{\delta}}
+\newcommand{\vepsilon}{\boldsymbol{\epsilon}}
+\newcommand{\vvarepsilon}{\boldsymbol{\varepsilon}}
+\newcommand{\vzeta}{\boldsymbol{\zeta}}
+\newcommand{\veta}{\boldsymbol{\eta}}
+\newcommand{\vtheta}{\boldsymbol{\theta}}
+\newcommand{\viota}{\boldsymbol{\iota}}
+\newcommand{\vkappa}{\boldsymbol{\kappa}}
+\newcommand{\vlambda}{\boldsymbol{\lambda}}
+\newcommand{\vmu}{\boldsymbol{\mu}}
+\newcommand{\vnu}{\boldsymbol{\nu}}
+\newcommand{\vxi}{\boldsymbol{\xi}}
+% omikron is just latin 'o'
+\newcommand{\vpi}{\boldsymbol{\pi}}
+\newcommand{\vrho}{\boldsymbol{\rho}}
+\newcommand{\vsigma}{\boldsymbol{\sigma}}
+\newcommand{\vtau}{\boldsymbol{\tau}}
+\newcommand{\vupsilon}{\boldsymbol{\upsilon}}
+\newcommand{\vphi}{\boldsymbol{\phi}}
+\newcommand{\vvarphi}{\boldsymbol{\varphi}}
+\newcommand{\vchi}{\boldsymbol{\chi}}
+\newcommand{\vpsi}{\boldsymbol{\psi}}
+\newcommand{\vomega}{\boldsymbol{\omega}}
+
+% VECTORS (GREEK) WITH TILDE ACCENT
+\newcommand{\vtalpha}{\widetilde{\valpha}}
+\newcommand{\vtbeta}{\widetilde{\vbeta}}
+\newcommand{\vtgamma}{\widetilde{\vgamma}}
+\newcommand{\vtdelta}{\widetilde{\vdelta}}
+\newcommand{\vtepsilon}{\widetilde{\vepsilon}}
+\newcommand{\vtvarepsilon}{\widetilde{\vvarepsilon}}
+\newcommand{\vtzeta}{\widetilde{\vzeta}}
+\newcommand{\vteta}{\widetilde{\veta}}
+\newcommand{\vttheta}{\widetilde{\vtheta}}
+\newcommand{\vtiota}{\widetilde{\viota}}
+\newcommand{\vtkappa}{\widetilde{\vkappa}}
+\newcommand{\vtlambda}{\widetilde{\vlambda}}
+\newcommand{\vtmu}{\widetilde{\vmu}}
+\newcommand{\vtnu}{\widetilde{\vnu}}
+\newcommand{\vtxi}{\widetilde{\vxi}}
+% omikron is just latin 'o'
+\newcommand{\vtpi}{\widetilde{\vpi}}
+\newcommand{\vtrho}{\widetilde{\vrho}}
+\newcommand{\vtsigma}{\widetilde{\vsigma}}
+\newcommand{\vttau}{\widetilde{\vtau}}
+\newcommand{\vtupsilon}{\widetilde{\vupsilon}}
+\newcommand{\vtphi}{\widetilde{\vphi}}
+\newcommand{\vtvarphi}{\widetilde{\vvarphi}}
+\newcommand{\vtchi}{\widetilde{\vchi}}
+\newcommand{\vtpsi}{\widetilde{\vpsi}}
+\newcommand{\vtomega}{\widetilde{\vomega}}
+
+% VECTORS (GREEK) WITH HAT ACCENT
+\newcommand{\vhalpha}{\widehat{\valpha}}
+\newcommand{\vhbeta}{\widehat{\vbeta}}
+\newcommand{\vhgamma}{\widehat{\vgamma}}
+\newcommand{\vhdelta}{\widehat{\vdelta}}
+\newcommand{\vhepsilon}{\widehat{\vepsilon}}
+\newcommand{\vhvarepsilon}{\widehat{\vvarepsilon}}
+\newcommand{\vhzeta}{\widehat{\vzeta}}
+\newcommand{\vheta}{\widehat{\veta}}
+\newcommand{\vhtheta}{\widehat{\vtheta}}
+\newcommand{\vhiota}{\widehat{\viota}}
+\newcommand{\vhkappa}{\widehat{\vkappa}}
+\newcommand{\vhlambda}{\widehat{\vlambda}}
+\newcommand{\vhmu}{\widehat{\vmu}}
+\newcommand{\vhnu}{\widehat{\vnu}}
+\newcommand{\vhxi}{\widehat{\vxi}}
+% omikron is just latin 'o'
+\newcommand{\vhpi}{\widehat{\vpi}}
+\newcommand{\vhrho}{\widehat{\vrho}}
+\newcommand{\vhsigma}{\widehat{\vsigma}}
+\newcommand{\vhtau}{\widehat{\vthau}}
+\newcommand{\vhupsilon}{\widehat{\vupsilon}}
+\newcommand{\vhphi}{\widehat{\vphi}}
+\newcommand{\vhvarphi}{\widehat{\vvarphi}}
+\newcommand{\vhchi}{\widehat{\vchi}}
+\newcommand{\vhpsi}{\widehat{\vpsi}}
+\newcommand{\vhomega}{\widehat{\vomega}}
+
+% MATRICES (LATIN)
+\newcommand{\MA}{\mat{A}}
+\newcommand{\MB}{\mat{B}}
+\newcommand{\MC}{\mat{C}}
+\newcommand{\MD}{\mat{D}}
+\newcommand{\ME}{\mat{E}}
+\newcommand{\MF}{\mat{F}}
+\newcommand{\MG}{\mat{G}}
+\newcommand{\MH}{\mat{H}}
+\newcommand{\MI}{\mat{I}}
+\newcommand{\MJ}{\mat{J}}
+\newcommand{\MK}{\mat{K}}
+\newcommand{\ML}{\mat{L}}
+\newcommand{\MM}{\mat{M}}
+\newcommand{\MN}{\mat{N}}
+\newcommand{\MO}{\mat{0}}
+\newcommand{\MP}{\mat{P}}
+\newcommand{\MQ}{\mat{Q}}
+\newcommand{\MR}{\mat{R}}
+\newcommand{\MS}{\mat{S}}
+\newcommand{\MT}{\mat{T}}
+\newcommand{\MU}{\mat{U}}
+\newcommand{\MV}{\mat{V}}
+\newcommand{\MW}{\mat{W}}
+\newcommand{\MX}{\mat{X}}
+\newcommand{\MY}{\mat{Y}}
+\newcommand{\MZ}{\mat{Z}}
+
+% MATRICES (LATIN) TILDE
+\newcommand{\MtA}{\widetilde{\mat{A}}}
+\newcommand{\MtB}{\widetilde{\mat{B}}}
+\newcommand{\MtC}{\widetilde{\mat{C}}}
+\newcommand{\MtD}{\widetilde{\mat{D}}}
+\newcommand{\MtE}{\widetilde{\mat{E}}}
+\newcommand{\MtF}{\widetilde{\mat{F}}}
+\newcommand{\MtG}{\widetilde{\mat{G}}}
+\newcommand{\MtH}{\widetilde{\mat{H}}}
+\newcommand{\MtI}{\widetilde{\mat{I}}}
+\newcommand{\MtJ}{\widetilde{\mat{J}}}
+\newcommand{\MtK}{\widetilde{\mat{K}}}
+\newcommand{\MtL}{\widetilde{\mat{L}}}
+\newcommand{\MtM}{\widetilde{\mat{M}}}
+\newcommand{\MtN}{\widetilde{\mat{N}}}
+\newcommand{\MtO}{\widetilde{\mat{0}}}
+\newcommand{\MtP}{\widetilde{\mat{P}}}
+\newcommand{\MtQ}{\widetilde{\mat{Q}}}
+\newcommand{\MtR}{\widetilde{\mat{R}}}
+\newcommand{\MtS}{\widetilde{\mat{S}}}
+\newcommand{\MtT}{\widetilde{\mat{T}}}
+\newcommand{\MtU}{\widetilde{\mat{U}}}
+\newcommand{\MtV}{\widetilde{\mat{V}}}
+\newcommand{\MtW}{\widetilde{\mat{W}}}
+\newcommand{\MtX}{\widetilde{\mat{X}}}
+\newcommand{\MtY}{\widetilde{\mat{Y}}}
+\newcommand{\MtZ}{\widetilde{\mat{Z}}}
+
+% MATRICES (LATIN) HAT
+\newcommand{\MhA}{\widehat{\mat{A}}}
+\newcommand{\MhB}{\widehat{\mat{B}}}
+\newcommand{\MhC}{\widehat{\mat{C}}}
+\newcommand{\MhD}{\widehat{\mat{D}}}
+\newcommand{\MhE}{\widehat{\mat{E}}}
+\newcommand{\MhF}{\widehat{\mat{F}}}
+\newcommand{\MhG}{\widehat{\mat{G}}}
+\newcommand{\MhH}{\widehat{\mat{H}}}
+\newcommand{\MhI}{\widehat{\mat{I}}}
+\newcommand{\MhJ}{\widehat{\mat{J}}}
+\newcommand{\MhK}{\widehat{\mat{K}}}
+\newcommand{\MhL}{\widehat{\mat{L}}}
+\newcommand{\MhM}{\widehat{\mat{M}}}
+\newcommand{\MhN}{\widehat{\mat{N}}}
+\newcommand{\MhO}{\widehat{\mat{0}}}
+\newcommand{\MhP}{\widehat{\mat{P}}}
+\newcommand{\MhQ}{\widehat{\mat{Q}}}
+\newcommand{\MhR}{\widehat{\mat{R}}}
+\newcommand{\MhS}{\widehat{\mat{S}}}
+\newcommand{\MhT}{\widehat{\mat{T}}}
+\newcommand{\MhU}{\widehat{\mat{U}}}
+\newcommand{\MhV}{\widehat{\mat{V}}}
+\newcommand{\MhW}{\widehat{\mat{W}}}
+\newcommand{\MhX}{\widehat{\mat{X}}}
+\newcommand{\MhY}{\widehat{\mat{Y}}}
+\newcommand{\MhZ}{\widehat{\mat{Z}}}
+
+% MATRICES (GREEK)
+\newcommand{\MGamma}{\mat{\Gamma}}
+\newcommand{\MDelta}{\mat{\Delta}}
+\newcommand{\MTheta}{\mat{\Theta}}
+\newcommand{\MLambda}{\mat{\Lambda}}
+\newcommand{\MXi}{\mat{\Xi}}
+\newcommand{\MPi}{\mat{\Pi}}
+\newcommand{\MSigma}{\mat{\Sigma}}
+\newcommand{\MUpsilon}{\mat{\Upsilon}}
+\newcommand{\MPhi}{\mat{\Phi}}
+\newcommand{\MPsi}{\mat{\Psi}}
+\newcommand{\MOmega}{\mat{\Omega}}
+
+% MATRICES (GREEK) TILDE
+\newcommand{\MtGamma}{\widetilde{\MGamma}}
+\newcommand{\MtDelta}{\widetilde{\MDelta}}
+\newcommand{\MtTheta}{\widetilde{\MTheta}}
+\newcommand{\MtLambda}{\widetilde{\MLambda}}
+\newcommand{\MtXi}{\widetilde{\MXi}}
+\newcommand{\MtPi}{\widetilde{\MPi}}
+\newcommand{\MtSigma}{\widetilde{\MSigma}}
+\newcommand{\MtUpsilon}{\widetilde{\MUpsilon}}
+\newcommand{\MtPhi}{\widetilde{\MPhi}}
+\newcommand{\MtPsi}{\widetilde{\MPsi}}
+\newcommand{\MtOmega}{\widetilde{\MOmega}}
+
+% MATRICES (GREEK) HAT
+\newcommand{\MhGamma}{\widehat{\MGamma}}
+\newcommand{\MhDelta}{\widehat{\MDelta}}
+\newcommand{\MhTheta}{\widehat{\MTheta}}
+\newcommand{\MhLambda}{\widehat{\MLambda}}
+\newcommand{\MhXi}{\widehat{\MXi}}
+\newcommand{\MhPi}{\widehat{\MPi}}
+\newcommand{\MhSigma}{\widehat{\MSigma}}
+\newcommand{\MhUpsilon}{\widehat{\MUpsilon}}
+\newcommand{\MhPhi}{\widehat{\MPhi}}
+\newcommand{\MhPsi}{\widehat{\MPsi}}
+\newcommand{\MhOmega}{\widehat{\MOmega}}
+
+% MATRIX SPACING BARS (for representing row/column-vectors)
+\newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{4ex}}
+\newcommand*{\horzbar}{\rule[.5ex]{4ex}{0.5pt}}
+\newcommand*{\svertbar}{\rule[-0.5ex]{0.5pt}{2ex}}
+
+% CUSTOM NUMERICS
+\newcommand{\EPS}{\text{EPS}}
+\DeclareMathOperator{\rd}{rd}
+\newcommand{\op}{\mathbin{\text{op}}}
+\newcommand{\mop}{\mathbin{\widetilde{\text{op}}}}
+
+
+% TILDE CHARACTERS
+\newcommand{\wta}{\widetilde{a}}
+\newcommand{\wtb}{\widetilde{b}}
+\newcommand{\wtc}{\widetilde{c}}
+\newcommand{\wtd}{\widetilde{d}}
+\newcommand{\wte}{\widetilde{e}}
+\newcommand{\wtf}{\widetilde{f}}
+\newcommand{\wtg}{\widetilde{g}}
+\newcommand{\wth}{\widetilde{h}}
+\newcommand{\wti}{\widetilde{i}}
+\newcommand{\wtj}{\widetilde{j}}
+\newcommand{\wtk}{\widetilde{k}}
+\newcommand{\wtl}{\widetilde{l}}
+\newcommand{\wtm}{\widetilde{m}}
+\newcommand{\wtn}{\widetilde{n}}
+\newcommand{\wto}{\widetilde{o}}
+\newcommand{\wtp}{\widetilde{p}}
+\newcommand{\wtq}{\widetilde{q}}
+\newcommand{\wtr}{\widetilde{r}}
+\newcommand{\wts}{\widetilde{s}}
+\newcommand{\wtt}{\widetilde{t}}
+\newcommand{\wtu}{\widetilde{u}}
+\newcommand{\wtv}{\widetilde{v}}
+\newcommand{\wtw}{\widetilde{w}}
+\newcommand{\wtx}{\widetilde{x}}
+\newcommand{\wty}{\widetilde{y}}
+\newcommand{\wtz}{\widetilde{z}}
+\newcommand{\wtA}{\widetilde{A}}
+\newcommand{\wtB}{\widetilde{B}}
+\newcommand{\wtC}{\widetilde{C}}
+\newcommand{\wtD}{\widetilde{D}}
+\newcommand{\wtE}{\widetilde{E}}
+\newcommand{\wtF}{\widetilde{F}}
+\newcommand{\wtG}{\widetilde{G}}
+\newcommand{\wtH}{\widetilde{H}}
+\newcommand{\wtI}{\widetilde{I}}
+\newcommand{\wtJ}{\widetilde{J}}
+\newcommand{\wtK}{\widetilde{K}}
+\newcommand{\wtL}{\widetilde{L}}
+\newcommand{\wtM}{\widetilde{M}}
+\newcommand{\wtN}{\widetilde{N}}
+\newcommand{\wtO}{\widetilde{O}}
+\newcommand{\wtP}{\widetilde{P}}
+\newcommand{\wtQ}{\widetilde{Q}}
+\newcommand{\wtR}{\widetilde{R}}
+\newcommand{\wtS}{\widetilde{S}}
+\newcommand{\wtT}{\widetilde{T}}
+\newcommand{\wtU}{\widetilde{U}}
+\newcommand{\wtV}{\widetilde{V}}
+\newcommand{\wtW}{\widetilde{W}}
+\newcommand{\wtX}{\widetilde{X}}
+\newcommand{\wtY}{\widetilde{Y}}
+\newcommand{\wtZ}{\widetilde{Z}}
+
+% HAT CHARACTERS
+\newcommand{\wha}{\widehat{a}}
+\newcommand{\whb}{\widehat{b}}
+\newcommand{\whc}{\widehat{c}}
+\newcommand{\whd}{\widehat{d}}
+\newcommand{\whe}{\widehat{e}}
+\newcommand{\whf}{\widehat{f}}
+\newcommand{\whg}{\widehat{g}}
+\newcommand{\whh}{\widehat{h}}
+\newcommand{\whi}{\widehat{i}}
+\newcommand{\whj}{\widehat{j}}
+\newcommand{\whk}{\widehat{k}}
+\newcommand{\whl}{\widehat{l}}
+\newcommand{\whm}{\widehat{m}}
+\newcommand{\whn}{\widehat{n}}
+\newcommand{\who}{\widehat{o}}
+\newcommand{\whp}{\widehat{p}}
+\newcommand{\whq}{\widehat{q}}
+\newcommand{\whr}{\widehat{r}}
+\newcommand{\whs}{\widehat{s}}
+\newcommand{\wht}{\widehat{t}}
+\newcommand{\whu}{\widehat{u}}
+\newcommand{\whv}{\widehat{v}}
+\newcommand{\whw}{\widehat{w}}
+\newcommand{\whx}{\widehat{x}}
+\newcommand{\why}{\widehat{y}}
+\newcommand{\whz}{\widehat{z}}
+\newcommand{\whA}{\widehat{A}}
+\newcommand{\whB}{\widehat{B}}
+\newcommand{\whC}{\widehat{C}}
+\newcommand{\whD}{\widehat{D}}
+\newcommand{\whE}{\widehat{E}}
+\newcommand{\whF}{\widehat{F}}
+\newcommand{\whG}{\widehat{G}}
+\newcommand{\whH}{\widehat{H}}
+\newcommand{\whI}{\widehat{I}}
+\newcommand{\whJ}{\widehat{J}}
+\newcommand{\whK}{\widehat{K}}
+\newcommand{\whL}{\widehat{L}}
+\newcommand{\whM}{\widehat{M}}
+\newcommand{\whN}{\widehat{N}}
+\newcommand{\whO}{\widehat{O}}
+\newcommand{\whP}{\widehat{P}}
+\newcommand{\whQ}{\widehat{Q}}
+\newcommand{\whR}{\widehat{R}}
+\newcommand{\whS}{\widehat{S}}
+\newcommand{\whT}{\widehat{T}}
+\newcommand{\whU}{\widehat{U}}
+\newcommand{\whV}{\widehat{V}}
+\newcommand{\whW}{\widehat{W}}
+\newcommand{\whX}{\widehat{X}}
+\newcommand{\whY}{\widehat{Y}}
+\newcommand{\whZ}{\widehat{Z}}
+
+% ARGUMENT DOT
+\newcommand{\argdot}{\,\cdot\,}
+
+% reinstate the Computer Modern calligraphic letters
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\setkomafont{section}{}
+\setkomafont{subsection}{}
+\setkomafont{subsubsection}{}
+\setkomafont{paragraph}{\bfseries}
+\setkomafont{subparagraph}{\mdseries}
+\renewcommand{\familydefault}{\rmdefault}
+
+\usepackage{comment}
+
+% compact text
+\linespread{0.1}
+\setlength{\parindent}{0pt}
+
+% compact lists even more
+\setdefaultleftmargin{0em}{0em}{0em}{0em}{0em}{0em}
+
+% compact sections
+\titlespacing*{\section}{0pt}{0em}{0em}
+\titlespacing*{\subsection}{0pt}{0em}{0em}
+\titlespacing*{\subsubsection}{0pt}{0em}{0em}
+\titlespacing*{\paragraph}{0pt}{0em}{5pt}
+\titlespacing*{\subparagraph}{0pt}{0em}{4pt}
+
+\newenvironment{talign*}
+ {\let\displaystyle\textstyle\csname align*\endcsname}
+ {\endalign}
+
+% coloured section headings for easier read
+\titleformat{name=\section}[block]
+{\sffamily}
+{}
+{0pt}
+{\colorsection}
+\newcommand{\colorsection}[1]{%
+	\colorbox{green!10}{\parbox[t][0em]{\dimexpr\columnwidth-2\fboxsep}{\thesection\ #1}}}
+
+\titleformat{name=\subsection}[block]
+{\sffamily}
+{}
+{0pt}
+{\subcolorsection}
+\newcommand{\subcolorsection}[1]{%
+	\colorbox{lime!10}{\parbox[t][0em]{\dimexpr\columnwidth-2\fboxsep}{\thesubsection\ #1}}}
+
+
+\titleformat{name=\subsubsection}[block]
+{\sffamily}
+{}
+{0pt}
+{\subsubcolorsection}
+\newcommand{\subsubcolorsection}[1]{%
+	\colorbox{lime!10}{\parbox[t][0em]{\dimexpr\columnwidth-2\fboxsep}{\thesubsubsection\ #1}}}
+
+% environment for multicols inside a list
+\NewDocumentEnvironment{listcols}{O{2} O{0pt}}
+{%
+	\bgroup %
+	\setlength{\multicolsep}{#2} %
+	\begin{multicols*}{#1} %
+	}
+	{%
+	\end{multicols*} %
+	\egroup %
+}
+
+% multicols lines & spacing
+\setlength{\columnsep}{2mm}
+\setlength{\columnseprule}{0.2pt}
+
+% No page numbers
+\pagenumbering{gobble}
+
+\newcommand{\uP}{\mathrm P}
+
+\begin{document}
+	\begin{multicols*}{3}
+	\begin{comment}
+\paragraph{Hoeffding's Inequality}
+Suppose $f$ is bounded in $[0,C]$. Then
+\begin{align*}
+\Prob{
+\underbrace{\abs{
+\underbrace{\Exp[P]{f(X)}}_{\text{true exp.}}
+-
+\underbrace{\frac{1}{N}\sum_{i=1}^Nf(x_i)}_{\text{approx.; emp. avg.}}
+}}_{\text{abs. error}}
+>\varepsilon
+}
+\leq
+\underbrace{
+2e^{\frac{-2N\varepsilon^2}{C^2}}
+}_{=:\delta(C,\varepsilon, N)}
+=
+2\left(e^{-2\left(\frac{\varepsilon}{C}\right)^2}\right)^N.
+\end{align*}
+
+\[
+N > \frac{1}{2}\left(\frac{C}{\varepsilon}\right)^2
+\log\left(\frac{2}{\delta}\right)
+\]
+\end{comment}
+
+
+		\section{Bayes Network}
+		\paragraph{Naive Bayes} Effects are conditionally independent given a cause.
+		
+		\paragraph{Bayesian network $(G,P)$:} DAG with cond.\ prob.\ dist.\ $\uP(X_s| Pa_{X_{s}})$.
+		 $(G,P)$ defines joint distribution $\uP (X_{1:n}) = \prod_{i} \uP(X_i| Pa_{X_{i}})$  .
+%		\includegraphics[height=2cm]{img/pai1.png}
+
+		\paragraph{Specifying a BN}
+		Variables $X_1, \cdots, X_n$. Pick order. For all $i \in [n]$ find 1.\ min.\ subset $A \subseteq \{X_1,\dots,X_{i-1}\}$ s.t.\ $X_i \perp X_{\bar A}|X_A$.
+		2.\ Specify/learn $\uP(X_i|A)$.
+
+		BN defined this way are sound. Ordering matters a lot for compact. o. repr.!
+		
+		\paragraph{Active Trails} If for all consecutive triplets $X, Y, Z$.
+		\begin{compactitem}
+			\item  $X \rightarrow  Y \rightarrow Z$ \& $Y$ is unobserved
+			\item  $X \leftarrow  Y \leftarrow Z$ \& $Y$ is unobserved
+			\item  $X \leftarrow  Y \rightarrow Z$ \& $Y$ is unobserved
+			\item  $X \rightarrow  Y \leftarrow Z$ \& $Y$ or any of $Y's$ descendants is oberserved
+		\end{compactitem}
+	
+		$X$ and $Y$ \emph{d-seperated by $Z$} iff no active trail exists with observations $Z$.
+		Implies c.i.: $\text{d-sep}(X;Y | Z) \Rightarrow X \perp Y | Z$.
+		
+		\section{Inference}
+		\paragraph{Typical Queries} Cond. Distr., MPE ($\argmax_{e,b,a} \uP(e,b,a | J=t, M = f)$), MAP ($\argmax_{e} \uP(e | J=t, M = f)$)
+		
+		\subsection{Exact Inference}
+		
+		\paragraph{Variable Elimination}
+		\begin{compactitem}
+		\item Given BN and Query $\uP(Q | E=e)$ ($E$ = evidence variables)
+		\item Choose an ordering of $X_1, ..., X_n$
+		\item Set up initial factors: $fi = \uP(X_i | P_{ai})$
+		\item For $i =1:n$, $X_i  \in X\setminus \{Q,E\}$
+		\begin{compactenum}
+			\item Collect and multiply all factors $f$ that include $X_i$  
+			\item Generate new factor by marginalizing out $X_i$
+			\item Add $g$ to set of factors, $g = \sum_{x_i}\prod_{j}f_j$
+		\end{compactenum}
+		\item  Renormalize $\uP(q,e)$ to get $\uP(q | e)$ = $\frac{1}{\sum_{q}\uP(q,e)}\uP(q,e)$
+		
+	\end{compactitem}
+
+		
+	\textbf{Variable Elimination for Polytrees}
+	
+	Polytree: A DAG is a polytree iff dropping edge dir. $\to$ tree
+	\begin{compactitem}
+		\item Pick root
+		\item Orient edges towards the root
+		\item Eliminate in topological ordering (descendants before parents)
+	\end{compactitem}
+
+	\paragraph{Factor Graph}
+	of BN is bipartite graph with variables on one side and factors on the other.
+	
+	\paragraph{Sum-Product / Belief Propagation Algorithm}	
+	
+	\begin{compactitem}
+		\item Initialize all messages as uniform distribution  
+		\item Until converged do
+		\begin{compactenum}
+			\item Pick some ordering on the factor graph edges (+directions)   
+			\item Update messages according to this ordering
+			
+			Messages from variable v to factor u: 
+			
+			$\mu^{(t+1)}_{v \rightarrow u}(x_v) = \prod_{u' \in N(v) \setminus \{u\}} \mu^{(t)}_{u' \rightarrow v}(x_{v})$ 
+			
+			Messages from factor u to variable v:
+			
+			$\mu^{(t+1)}_{u \rightarrow v}(x_v) = \sum_{x_u \sim x_v} f_u(x_u) \prod_{v' \in N(u) \setminus \{v\}} \mu^{(t)}_{v' \rightarrow u}(x_{v'})$ 
+
+			\item Break once all messages change by at most $\epsilon$
+		\end{compactenum}
+	\end{compactitem}
+
+	Intention: $\hat \uP(X_v = x_v) \propto \prod_{u \in N(v)} \mu_{u \rightarrow v} (x_v)$
+
+	$\hat \uP(X_u = x_u) \propto f_u(x_u) \prod_{v \in N(u)} \mu_{v \rightarrow u} (x_u)$
+
+	\paragraph{Belief Propagation on Trees (converges in two rounds)}
+	\begin{compactitem}
+		\item Factor graph of polytree is a tree!
+		\item Choose one node as root
+		\item Send messages from leaves to root, and from root to leaves
+	\end{compactitem}
+   
+\paragraph{Variable Elimination for MPE}	
+\begin{compactitem}
+	\item Given BN and evidence $E=e$
+	\item Choose an ordering of $X_1,\dots,X_n$
+	\item Set up initial factors: $f_i = \uP(X_i | Pa_i)$
+	\item For $i=1:n, X_i \notin  E$
+  	\begin{compactenum}
+  	\item Collect and multiply all factors $f_j$ that include $X_i$   
+  	\item Generate new factor by maximizing out $X_i, g_i = \max_{x_i} \prod_{j} f_j$
+  	\item Add $g$ to set of factors
+  	\end{compactenum}
+	\item For $i=n:-1:1, X_i \notin  E$:  $\hat{x_i} = \argmax_{x_i} g_i(x_i, \hat{x}_{i+1:n})$
+\end{compactitem}
+
+\subparagraph{Example}
+\begin{talign*}
+  & \argmax_{e , b, a} \uP(e,b,a| J, M) = \argmax_{e, b, a} \bcancel{\frac{1}{Z}} \uP(e,b,a, J,M) \\
+= & \argmax_{e , b, a} \uP(e)\uP(b)\uP(a|e,b)\uP(J|a)\uP(M|a) \\
+= & \argmax_{a} \uP(J|a)\uP(M|a) \argmax_{e} \uP(e) \argmax_{b} \uP(b)\uP(a|e,b)
+\end{talign*}
+\begin{talign*}
+a^{*} = &\argmax_{a} P(J|a)P(M|a) g_e(a) \\
+e^{*} = &\argmax_{e} P(J|a^*)P(M|a^*) P(e) g_b(a^*,e)
+\end{talign*}
+
+\paragraph{Max-product Message Passing on Factor Graphs}
+
+Messages from variable v to factor u: 
+
+$\mu^{(t+1)}_{v \rightarrow u}(x_v) = \prod_{u' \in N(v) \setminus \{u\}} \mu^{(t)}_{u' \rightarrow v}(x_{v})$ 
+
+Messages from factor u to variable v:
+
+$\mu^{(t+1)}_{u \rightarrow v}(x_v) = \max_{x_u \sim x_v} f_u(x_u) \prod_{v' \in N(u) \setminus \{v\}} \mu^{(t)}_{v' \rightarrow u}(x_{v'})$ 
+ 
+ \textbf{Retrieving MAP From Max-Product}
+ \begin{compactitem}
+ \item Define max-marginals: $P_{max}(X_v =x_v) = \max_{x \sim x_v} P(x)$
+ \item For tree factor graphs, max-product computes max-marginals: 
+ $P_{max}(X_v = x_v) \propto \prod_{u \in N(v)} \mu_{u \rightarrow v} (x_v)$ 
+\item Can retrieve MAP sol. from these (must be careful with ties)
+\end{compactitem}
+\subsection{Approximate Inference}
+Problem: if BN contains loops.
+Loopy belief propagation will in general not converge	$\rightarrow$ Sampling Based Inference
+
+\textbf{Monte Carlo Sampling from a BN (forward Sampling)}
+\begin{compactitem}
+	\item Sort variables in topological ordering $X_1,...,X_n$
+	\item For $i=1$ to 	$n$ do: Sample $xi \sim P(X_i | X_1=x_1, ..., X_{i-1}=x_{i-1})$
+\end{compactitem}
+
+\textbf{Computing Probabilities Through Sampling}
+
+Marginals: $P(w=t) \approx \frac{1}{N} \sum_{i=1}^{N}[w=t](x^{(i)} =\frac{ Count(w=t)}{N}$
+
+Conditionals: $P(C=t | W=t) = \frac{P(C=t, W=t)}{P(w=t)} \approx \frac{Count(W=t, C=t)}{Count(W=t)}$
+
+\textbf{Rejection Sampling}
+``Normalen Würfel nehmen um Verteilung von 1..5 zu samplen, 6 wird jeweils ignoriert''
+
+$\hat{P}(X_A = x_A | X_B = x_B) \approx \frac{Count(x_a, x_B)}{Count(x_B)}$
+
+Throw away samples that disagree with $x_B$ problematic if $x_B$ is a rare event.
+
+\paragraph{Markov Chain}
+
+A MC is sequence of RVs, $X_1,\dots,X_N$ with \emph{Prior} $\uP(X_1)$ \& \emph{transition probabilities} $\uP(X_{t+1} | X_t)$ independent of $t$.
+
+\subparagraph{Ergodic:} $\exists t\in{\mathbb N}$ s.t. every state is reachable from every state in exactly $t$ steps.
+Then it has uniq., positive, stat. distribution.
+
+$\exists$ uniq. stat. $\pi(x)>0\ s.t.\ \forall x \lim\limits_{N\rightarrow\infty}\uP(X_N = x)=\pi(x)$ ind. of $\uP(X_1)$.
+\subparagraph{Ergodic Thm:}$\lim\limits_{N\rightarrow\infty} \frac{1}{N}\sum_if(x_i)=\sum_{x\in D} \pi(x)f(x)$, where D finite state space.
+
+\paragraph{Sampling from MC}
+Sample $x_1 \sim \uP(X_1), x_2 \sim \uP(X_2 | X_1=x_1), \dots, x_N \sim \uP(X_N | X_{N-1}=x_{N-1})$.
+If simulated “sufficiently long”, sample $X_N$ is drawn “very close” to the stationary dist.\ $\pi$.
+
+
+\begin{algorithm}[H]
+\DontPrintSemicolon
+Start with initial assignment $\vx$ to all variables\;
+Fix observed variables $\rvX_B$ to their observed values $\vx_B$\;
+\For{$t\gets 1$ \KwTo $\infty$}{
+	Pick a variable $i$ uniformly at random from $\set{1,\ldots,n}\setminus B$\;
+	Set $\vv_i=$values of $\vx$, except for $x_i$\;
+	Update $x_i$ by sampling from $\cProb{\rX_i}{\vv_i}$
+}
+\caption{Gibbs Sampling: Random Order}
+\end{algorithm}
+Satisfies detailed balance equation! For unnormalized $Q$  $\forall x, x': \frac{1}{Z} Q(x)P(x'|x) = \frac{1}{Z} Q(x')P(x|x') $
+
+\begin{algorithm}[H]
+\DontPrintSemicolon
+Start with initial ass. $\vx^{(0)}$ to all (except the
+obs.) vars\; 
+Fix observed variables $\rvX_B$ to their observed values
+$\vx_B$\; \For{$t\gets 1$ \KwTo $\infty$}{
+	$\vx^{(t)}\gets\vx^{(t-1)}$ (Load the previous sample)\;
+	\ForEach{variable $X_i$ (except those in $B$)}{
+		Construct evidence:\newline
+		$\vv_i=$ values of $\vx^{(t)}$, except for $x_i$,
+		since this is the variable that we want to sample.\; 
+		Sample $x_i^{(t)}\sim\cProb{\rX_i}{\vv_i}$ (Update the value of the sample)\;
+		$\vx^{(t)}_i\gets x_i^{(t)}$\; }
+	Output the sample $\vx^{(t)}$
+}
+\caption{Gibbs Sampling: Practical Variant}
+\end{algorithm}
+No detailed balance, but also has correct stationary distribution.
+
+\subparagraph{Ex.\ for Michi} $\uP(C|S,R,W=1) = \frac{\uP(C,S,R,W=1)}{\sum_{c'}\uP(C = c', S, R, W = 1)}$.
+
+%\includegraphics[height=2.5cm]{img/pai3.png}
+
+\paragraph{Metropolis Hastings MCMC Algorithm}
+
+\begin{compactenum}
+  \item Proposal distribution $\cDist{R}{X'}{X}$
+  \begin{compactitem}
+    \item Given $X_t=x$, sample ``proposal'' $x'\sim \cDist{R}{X'}{X=x}$
+    \item Note: The performance of the algorithm will strongly depend on $R$.
+  \end{compactitem}
+  \item Acceptance distribution:
+  \begin{compactitem}
+    \item Suppose $X_t=x$
+    \item With probability
+    $
+    \alpha =
+    \min\set{1,\frac{\Dist{Q}{x'}\cDist{R}{x}{x'}}{\Dist{Q}{x}\cDist{R}{x'}{x}}}
+    $
+    set $X_{t+1}=x'$
+    \item With prob. $1-\alpha$, set $X_{t+1}=x$ (again to the
+    current/same state).
+  \end{compactitem}
+\end{compactenum}
+
+\subsection{Temporal models}
+
+\textbf{Markov Chains}
+
+Markov assumption: $x_{t+1} \perp x_{1:t-1} | x_t \forall t$
+
+Stationary asm.: $P(x_{t+1} = x | x_t = x') = P(x_{t'+1} | x_{t'} = x') \forall t, t'$
+
+\textbf{Hidden Markov Model/ Kalman Filters}\\
+$X_1,\dots,X_T$: Unobserved (hidden) variables (called states) \\
+$Y_1,\dots,Y_T$: Observations \\
+HMMs: $X_i$ categorical, $Y_i$ categorical (or arbitrary)\\
+Kalman Filters: $X_i, Y_i$ Gaussian distributions
+
+\paragraph{Inference Tasks}
+
+Filtering: $P(X_t | y_{1:t} ) $; Prediction: $P(X_{t+T} | y_{1:t} )$ ; Smoothing: $P(X_t | y_{1:T}) \text{ for } 1\leq t < T$ ; MPE: $\argmax_{X_{1:T}} P(X_{1:T} | y_{1:T})$
+
+\paragraph{Bayesian Filtering}
+Suppose we already have computed $P(X_t | y_{1,\dots,t})$ now want to efficiently compute $P(X_{t+1} | y_{1,...,t+1})$
+
+\begin{compactitem}
+	\item Start with $P(X_1)$
+	\item At time $t$ (Assume we have:  $P(X_t | y_{1,...,t-1})$
+	\item Conditioning: $P(X_t | y_{y1:t}) = \frac{1}{Z} P(X_t | y_{1:t-1})P(y_t | X_t)$
+	\item $Z= \sum P(x,y_t | y_{1:t-1})$
+	\item Prediction: $P(X_{t+1} | y_{y1:t}) = \sum_{x_t}  P(X_t | y_{1:t}) P(X_{t+1} | x_t)$
+\end{compactitem}
+Computation is recursive (cost independent of t)!
+
+\paragraph{Particle filtering}
+Approximate the posterior at each time by samples (particles), which are propagated and reweighted over time.
+True distribution (possibly continuous): $P(x)$, $N$ i.i.d. samples: $x_1,..x_N$; Represent: $P(x) \approx \frac{1}{N} \sum_{i=1}^{N} \delta_{x_i}(x)$. E.g. $\delta_{x_i}(x):= x_i = x$
+
+\begin{compactitem}
+	\item Suppose $P(X_t | y_{1:t}) \approx \frac{1}{N} \sum_{i=1}^{N} \delta_{x_i, t}$ (measurement)
+	\item Prediction: Propag. each particle: $x'_i \sim P(X_{t+1} | x_{i,t})$ (movement)
+	\item Conditioning: Weigh particles: $w_i = \frac{1}{Z}P(y_{t+1} | x'_i)$
+	\item Conditioning: Resample $N$ particles: $x_{i, t+1} \sim \frac{1}{N} \sum_{i=1}^{N} w_i\delta_{x'_i}$ 
+\end{compactitem}
+
+\subsection{Probabilistic planning}
+How should we control the robot to maximize reward?
+
+\paragraph{Markov Decision Process (MDP)} -- ``controlled Markov chain'':
+States $X=\{1,...,n\}$, actions $A=\{1,...,m\}$, transition probabilities $\uP(x' | x, a) = \Pr[\text{next state } = x' | \text{Action } a \text{ in state } x)]$ and reward function $r(x,a)$.
+
+\paragraph{Induced MC by Policy}A deterministic policy $\pi$ induces a
+\emph{Markov Chain} $X_0,X_1,\ldots,X_t,\ldots$ with transition probabilities
+\[
+\cProb{X_{t+1}=x'}{X_t=x}=\cProb{x'}{x,\pi(x)}
+\]
+
+\subparagraph{Modes} Finite horizon ($T$ timesteps) or discounted rewards ($\infty$ timesteps but discount factor $\gamma$).
+
+\paragraph{Value of policy} deterministic (fixed) policy $\pi: X \rightarrow A$.
+\begin{talign*}
+V_\pi(x) & = J(\pi | X_0 = x) = \mathbb{E}[\sum_{t=0}^{\infty} \gamma^t r(X_t, \pi(X_t)) | X_0 = x] \\
+         & = \sum_{x'}\uP(x'|x,\pi(x))[r(x,\pi(x),x')+\gamma V_\pi(x')]. \\
+         & = r(x, \pi(x)) + \gamma \sum_{x'} \uP(x' | x, \pi(x)) V_\pi(x')
+\end{talign*}
+Given $\pi$, compute $V_\pi$ exactly by solving linear system!
+
+\paragraph{Greedy policy} w.r.t. $V$
+\begin{talign*}
+\pi_g(x) & = \argmax_a\sum_{x'}\uP(x'|x,a)\left(r(x,a,x')+\gamma V_\pi(x')\right) \\
+         & = \argmax_a r(x,a) + \gamma\sum_{x'}\uP(x'|x,\pi(x))V_\pi(x')).
+\end{talign*}
+
+\paragraph{Bellmann Eq.}
+Policy opt.\ $\iff$ greedy w.r.t.\ its ind. val. f. \\
+$V^*(x) = \max_a\left[ r(x,a) + \gamma\sum_{x'}\uP(x'|x,a)V^*(x')\right]$.
+
+\textbf{Recursion of Value Function}
+
+\begin{gather*}
+\begin{align*}
+\vv^\pi=\begin{pmatrix}
+V^\pi(1)\\
+V^\pi(2)\\
+\vdots\\
+V^\pi(n)\\
+\end{pmatrix},
+%
+\quad
+%
+\MT^\pi=
+\begin{pmatrix}
+\cProb{1}{1,\pi(1)} & \cdots & \cProb{n}{1,\pi(1)}\\
+\cProb{1}{2,\pi(2)} & \cdots & \cProb{n}{2,\pi(2)}\\
+\vdots & \ddots & \vdots\\
+\cProb{1}{n,\pi(n)} & \cdots & \cProb{n}{n,\pi(n)}\\ 
+\end{pmatrix},
+%
+\quad
+%
+\vr^\pi=
+\begin{pmatrix}
+r(1,\pi(1))\\
+r(2,\pi(2))\\
+\vdots\\
+r(n,\pi(n))
+\end{pmatrix}.
+\end{align*}
+\end{gather*}
+$
+\vv^\pi=\vr^\pi+\gamma\MT^\pi\vv^\pi
+\,\Longleftrightarrow\,
+\vv^\pi=\left(\MI-\gamma\MT^\pi\right)^{-1}\vr^\pi.
+$
+
+%\includegraphics[height=3.5cm]{img/pai5.png}
+\begin{algorithm}[H]
+\DontPrintSemicolon
+Start with an arbitrary (e.g., random) policy $\pi$\;
+\While{not converged}{
+	(2) Compute value function $V^\pi(x)$ (solve LSE)\;
+	(1) Compute greedy policy $\pi_G$ w.r.t. $V^\pi$\;
+	$\pi\gets \pi_G$ (use the current greedy policy for the next iter.)\;
+}
+\caption{Policy Iteration}
+\end{algorithm}
+
+Converged when $\pi = \pi_G$.
+Guaranteed to monotonically improve, thus converging to an optimal policy in poly.\ steps.
+Iteration: $O(n^3)$-time.
+
+\begin{algorithm}[H]
+\caption{Value Iteration (usualy learned off-policy)}
+\DontPrintSemicolon
+\ForEach{$x\in\cX$}{
+	$V_0(x)\gets\max_a r(x,a)$ (Init)\;
+}
+Iteratively compute value function:\;
+\For{$t\gets 1$ \KwTo $\infty$}{
+	\ForEach{$x\in\cX$}{
+		\ForEach{$a\in\cA$}{
+			$Q_t(x,a)=r(x,a)+\gamma\sum_{x'}\cProb{x'}{x,a}V_{t-1}(x')$\;
+		}
+		$V_t(x)\gets\max_a Q_t(x,a)$ (so called ``Bellman Update'')\;
+	}
+	\If{$\norm{\vv_t-\vv_{t-1}}_{\infty}<\epsilon'$}{
+		\KwBreak\;
+	}
+}
+Then choose greedy policy $\pi_G$ w.r.t. $V_t$\;
+\end{algorithm}
+
+Conv. to $\epsilon$-optimal policy in poly. steps. Iteration: $O(n\cdot
+m\cdot a)$-time.
+
+\section{Learning BN}
+Learn from i.i.d. data: 1.) Learning structure (conditional independencies) 2.) Learning parameters (CPDs)
+
+\subsection{Parameter learning}
+$P(X_1, ..., X_N) = \prod_{i=1}^{n} P(X_i | Pa_i, {\theta}_{i | Pa_i})$
+
+Given:  BN structure $G$ \& Data set $D$ of complete observations
+For each variable $X_i$ estimate: $\hat{\theta}_{X_i | Pa_i} = \frac{Count(X_i , Pa_i)}{Count(Pa_i)}$ (MLE)
+
+We can also use a Beta prior (A priori knowledge).
+
+\subsection{Structure learning}
+Score based structure learning: scoring function S(G;D). Quantifies, for each structure G the fit to the data D. 
+
+$G^* = \argmax_G S(G;D)$; MLE: $S(G;D) = \max_\theta \log P(D | \theta, G)$
+
+$\log P(D | \theta_{G \text{, MLE for G}}, G) = N \sum_{i=1}^{n} \hat{I}(X_i; Pa_i) + c$.
+
+Problem: Optimal sol. for MLE is always the fully  connected graph. 
+
+\paragraph{Mutual Inf (MI)}
+$I(X_i; X_j) = \sum_{X_i, X_j} \uP(X_i, X_j) \log \frac{\uP(x_i, x_j)}{\uP(x_i) \uP(x_j)} \geq 0$
+%(Def.\ analog.\ for sets $\mathbf{X}_A, \mathbf{X}_B$).
+
+\subparagraph{Empir. MI}
+$\hat{\uP}(X_i, X_j) = \frac{\#(X_i, X_j)}{N}$, $\hat I(X_i; X_j) = \sum_{x_i, x_j} \hat{\uP}(x_i, x_j) \log \frac{\hat{\uP}(x_i, x_j)}{\hat{\uP}(x_i) \hat{\uP}(x_j)}$
+
+\subparagraph{Entropy}
+$H(X_i) = -\sum_{x_i}\uP(x_i)\log\uP(x_i) = \mathbb{E}_{x_i}[-\log\uP(x_i)]$.
+
+\subparagraph{Properties of MI}
+$I(X_i; X_j) = 0$ iff $X_i, X_j$ independent. Symmetric.
+$I(X_A; X_B) = H(X_A) - H(X_A|X_B)$.
+$B \subseteq C \implies I(X_A; X_B) \leq I(X_A; X_C)$. %; proof: $I(X_A; X_B) = H(X_A) - H(X_A|X_B) \leq H(X_A) - H(X_A|X_C) = H(X_A)−H(X_A|X_C)=I(X_A;X_C)$
+
+\paragraph{Bayesian Information Criterion (BIC)}
+(Regularizing) $S_{BIC}(G) = \sum_{i=1}^{n} \hat{I}(X_i ; Pa_i) - \frac{\log N}{2N} |G|$ where $|G|$ is \# of parameters of G, n is \# of variables, N is \# of training examples.
+
+\paragraph{Chow-Liu algorithm}
+Given samples of $X_1,\dots,X_n$.
+Find BN with exactly one parent per variable.
+Gives opt.\ tree w.r.t.\ BIC.
+\begin{compactitem}
+	\item For each pair $X_i, X_j$ of variables compute $\hat{P}(x_i, x_j)$
+	\item Compute Mutual Information $\hat{I}(X_i, X_j)$
+	\item Take graph $K_n$, weight edge $(X_i,X_j) = \hat{I}(X_i, X_j)$
+	\item Find maximum spanning tree of graph $\rightarrow$ undirected tree
+	\item Pick any variable as root and orient the edges away using BFS
+\end{compactitem}
+
+\section{Reinforcement Learning}
+``Learn mapping from (seq.\ of) actions to rewards''
+
+\subsection{Passive Reinforcement}
+Execute a set of trials in the environment using (fixed) policy  $\pi$
+Reduction to a supervised problem. But does not exploit that values of states are not independent! (Bellman)
+
+\subsection{Active Reinforcement Learning}
+Not interested in fixed policy; need to decide action in every state. Fundamental Dilemma: Exploration-Exploitation.
+
+\begin{compactitem}
+	\item Always pick a random action - will eventually estimate all prob and rewards. May do extremely poorly. 
+	\item Always pick the best action according to current knowledge - quickly get some rewards but can get stuck in suboptimal action.
+\end{compactitem}
+
+\subsubsection{Model-based RL }
+Learn the MDP - optimize policy based on MDP.
+
+\textbf{Learning the MDP}
+
+Estimate transitions: $\hat{P}(X_{t+1} | X_t, A_t) = \frac{Count(X_{t+1}, X_t, A_t)}{Count(X_t, A_t)}$
+
+Estimate rewards: $\hat{r}(X=x, A= a) = \frac{\sum_{t: x_t = x, a_t = a} r_t}{Count(X = x, A = a)}$
+
+\textbf{ $\epsilon_t$ greedy}
+With probability  $\epsilon_t$: Pick random action; With probability $(1- \epsilon_t)$: Pick best action
+
+\paragraph{$R_{max}$ Algorithm}
+Init: $r(x, a)$ = $R_{max}$.
+$P(x^* | x, a) = 1$ where $x^*$ is a “fairy tale” state: $r(x^*, a) = r_{max}  \forall a$
+Choose optimal $\pi$ according to $r$,$P$
+
+Repeat:
+Execute $Pi$. $\forall(x,a)\in visited$. update $r(x,a)$. Estimate $P(x'|x,a)$.
+After "enough" rewards, recompute $\pi$ according to $r$,$P$.
+
+Depends heavily on state space $O(|x|^3)$
+
+
+\subsubsection{Model-free RL}
+Estimate the value function directly.
+
+\paragraph{Q-Learning}
+$Q^*(x, a) = r(x, a) + \gamma \cdot \max_{a'} (Q^*(x', a'))$;
+
+\subparagraph{Algorithm} Init Q matrix to zero (or R if \emph{optimistic}).
+\begin{compactitem}
+	\item Select/Observe init state $x$
+	\item Repeat until end state (restart after epoch):
+	\item Select $a$ according to policy (i.e. $\epsilon$-greedy, or $\pi(x) = \argmax_a Q(x, a)$).
+	\item Observe new state $x'$ and reward $r(x,a,x')$.
+	\item $Q^{(t+1)}(x, a) \leftarrow (1-\alpha_t)Q^{(t)}(x, a) + \alpha_t(r(x,a,x') + \gamma \max_{a'}Q^{(t)}(x',a'))$
+	\item $Q^{(t+1)}(x, a') \leftarrow Q^{(t)}(x, a') \forall a \neq a'$, remaining actions stay same.
+	\item $Q^{(t+1)}(x'', a') \leftarrow Q^{(t)}(x'', a') \forall x'' \neq x$, remaining states stay same.
+	\item $x \leftarrow x'$
+\end{compactitem}
+
+Depends on action space $O(|a|)$ (matrix size), i.e. iteration time is in $O(|a|)$.
+
+\end{multicols*}
+\end{document}
+
+
