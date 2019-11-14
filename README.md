@@ -2,7 +2,7 @@
 
 Exam cheat sheet for the "Probabilistic Artificial Intelligence" course taught by Prof. Dr. Andreas Krause at ETH Zürich in fall 2017.
 
-**Credits:** This summary is mostly based on the summary of [Tim Traubner](https://github.com/timethy/probabilistic_ai).
+**Credits:** This summary is mostly based on the summary of [Tim Traubner](https://github.com/timethy/probabilistic_ai) - many thanks!
 
 **Disclaimer:** Please be advised that nothing found here is guaranteed to be complete or correct.
 
